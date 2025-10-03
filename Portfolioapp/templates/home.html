@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nidha Fathima P A | Portfolio</title>
+
+<!-- Meta for SEO -->
+<meta name="description" content="Portfolio of Nidha Fathima P A, Python Django Full Stack Developer skilled in web application development, database design, and AI-powered projects.">
+<meta name="keywords" content="Python, Django, Full Stack Developer, Web Developer, Portfolio, Nidha Fathima">
+
+<!-- Open Graph for better preview -->
+<meta property="og:title" content="Nidha Fathima | Python Django Full Stack Developer">
+<meta property="og:description" content="Portfolio showcasing Python Django full-stack projects, AI-powered apps, and web development expertise.">
+<meta property="og:image" content="{% static 'Portfolioapp/images/img23.jpg' %}">
+<meta property="og:type" content="website">
+
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="{% static 'Portfolioapp/images/favicon.png' %}">
+
+<!-- Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f9f9f9;
+    color: #333;
+    scroll-behavior: smooth;
+  }
+
+  /* Navbar */
+  nav {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(8px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.6rem 1.2rem;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    z-index: 1000;
+  }
+  nav .logo {
+    font-weight: bold;
+    font-size: 1.3rem;
+    color: #1e3a8a;
+  }
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 1rem;
+    margin: 0; padding: 0;
+  }
+  nav ul li a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: color 0.3s;
+  }
+  nav ul li a:hover { color: #1e3a8a; }
+
+  .hamburger { display: none; flex-direction: column; cursor: pointer; }
+  .hamburger span {
+    height: 3px; width: 25px;
+    background: #333; margin: 4px 0;
+    border-radius: 5px;
+  }
+  @media (max-width: 768px) {
+    nav ul {
+      display: none;
+      flex-direction: column;
+      background: white;
+      position: absolute; top: 60px; right: 10px;
+      width: 200px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+      border-radius: 10px;
+      padding: 1rem;
+    }
+    nav ul.active { display: flex; }
+    .hamburger { display: flex; }
+  }
+
+  /* Hero */
+  .hero {
+    min-height: 85vh;
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: center;
+    text-align: center;
+    padding: 3rem 1rem;
+    margin-top: 60px;
+    background: linear-gradient(135deg, #e0f2fe, #fef9c3);
+  }
+  .hero img {
+    width: 140px; height: 140px;
+    border-radius: 50%; border: 3px solid #1e3a8a;
+    margin-bottom: 1rem; object-fit: cover;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+  }
+  .hero h1 { font-size: 2.6rem; margin: 0.5rem 0; }
+  .hero h2 { font-size: 1.2rem; font-weight: 300; margin-bottom: 1rem; }
+  .btn {
+    padding: 0.7rem 1.5rem;
+    background: #1e3a8a; color: white;
+    border-radius: 25px; text-decoration: none;
+    font-weight: bold;
+    transition: transform 0.3s, background 0.3s;
+  }
+  .btn:hover { background: #ffda77; color: #222; transform: scale(1.05); }
+
+  /* Typing animation */
+  .typing {
+    border-right: 2px solid #1e3a8a;
+    white-space: nowrap;
+    overflow: hidden;
+    display: inline-block;
+    animation: typing 3s steps(25, end), blink 0.6s step-end infinite;
+  }
+  @keyframes typing { from { width: 0 } to { width: 100% } }
+  @keyframes blink { 50% { border-color: transparent } }
+
+  /* Sections */
+  section {
+    padding: 3rem 1rem;
+    max-width: 950px;
+    margin: auto;
+    text-align: center;
+  }
+  section h2 {
+    font-size: 1.9rem; margin-bottom: 1rem;
+    color: #1e3a8a; position: relative; display: inline-block;
+  }
+  section h2::after {
+    content: ''; display: block;
+    width: 60px; height: 3px;
+    background: #ffda77;
+    margin: 0.5rem auto 0; border-radius: 3px;
+  }
+
+  /* Cards */
+  .skills-grid, .projects-grid, .education-grid {
+    display: grid; gap: 1rem;
+    margin-top: 1.5rem;
+  }
+  .skills-grid { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+  .education-grid { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+  .projects-grid { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+
+  .skill-card, .project-card, .edu-card {
+    background: white; border-radius: 12px;
+    padding: 1.2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transition: transform 0.3s, background 0.3s;
+    opacity: 0; transform: translateY(30px);
+  }
+  .skill-card:hover { background: #ffda77; transform: translateY(-6px); }
+  .project-card:hover, .edu-card:hover { transform: translateY(-6px); }
+
+  .project-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1.5rem;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+  }
+  .project-card h3 { color: #1e3a8a; margin-top: 0; }
+  .project-card p { flex-grow: 1; margin: 0.8rem 0; color: #444; font-size: 0.95rem; }
+  .project-card .btn { align-self: flex-start; margin-top: 1rem; }
+
+  .project-card:hover { transform: translateY(-6px); box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
+
+  /* Contact */
+  #contact a { color: #1e3a8a; text-decoration: none; font-weight: 500; }
+  #contact a:hover { color: #ffda77; }
+
+  /* Footer */
+  footer {
+    background: #222; color: white;
+    padding: 1rem; text-align: center; font-size: 0.9rem;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <div class="logo">NIDHA FATHIMA P A</div>
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="hamburger" onclick="document.querySelector('nav ul').classList.toggle('active')">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+</header>
+
+<main>
+<section id="home" class="hero">
+  <img src="{% static 'Portfolioapp/images/img23.jpg' %}" alt="Profile">
+  <h1>Hello, I'm <span style="color:#ffda77;">Nidha Fathima P A</span></h1>
+  <h2><span class="typing">Python | Django | Full Stack Developer</span></h2>
+  <a href="#projects" class="btn">🚀 View My Projects</a>
+</section>
+
+<section id="about">
+  <h2>About Me</h2>
+  <p>I’m a Python Django Full Stack Developer who enjoys building web applications that are smooth, functional, and user-friendly. I love solving problems, writing clean code, and collaborating with others to bring ideas to life.</p>
+  <p>I specialize in <strong>Python</strong>, <strong>Django</strong>, HTML, CSS, JavaScript, Bootstrap, and databases like MySQL & PostgreSQL. My goal is always to create applications that are reliable and enjoyable for users.</p>
+  <div class="resume-buttons">
+   <a href="{% static 'Portfolioapp/Resume/resume.pdf' %}" target="_blank" class="btn">
+    <i class="fa-solid fa-file-pdf"></i> View Resume
+</a>
+<a href="{% static 'Portfolioapp/Resume/resume.pdf' %}" download class="btn">
+    <i class="fa-solid fa-download"></i> Download Resume
+</a>
+ </div>
+</section>
+
+<section id="skills">
+  <h2>Skills</h2>
+  <div class="skills-grid">
+    <div class="skill-card"><i class="fab fa-python"></i> Python</div>
+    <div class="skill-card"><i class="fa-solid fa-bolt"></i> Django</div>
+    <div class="skill-card"><i class="fab fa-java"></i> Java</div>
+    <div class="skill-card"><i class="fas fa-database"></i> MySQL</div>
+    <div class="skill-card"><i class="fas fa-database"></i> PostgreSQL</div>
+    <div class="skill-card"><i class="fab fa-html5"></i> HTML</div>
+    <div class="skill-card"><i class="fab fa-css3-alt"></i> CSS</div>
+    <div class="skill-card"><i class="fab fa-js"></i> JavaScript</div>
+  </div>
+</section>
+
+<section id="projects">
+  <h2>Projects</h2>
+  <div class="projects-grid">
+    <div class="project-card">
+      <h3>🐾 PetFlix</h3>
+      <p>PetFlix is an AI-powered platform built with Java (frontend), PHP (backend), and MySQL that connects pet owners, veterinarians, and caretakers, offering medical record storage, vaccination tracking, appointment scheduling, and AI-driven recommendations.</p>
+
+    </div>
+    <div class="project-card">
+      <h3>🏠 Hostel Management System</h3>
+      <p>A Django-based web app simplifying hostel operations: tenant registration, room allocation, food preference selection, rent payment with history tracking, and complaint submission. Admins manage tenants, payments, and complaints via a centralized dashboard.</p>
+
+    </div>
+  </div>
+</section>
+
+<section id="education">
+  <h2>Education</h2>
+  <div class="education-grid">
+    <div class="edu-card">
+      <h3>Bachelor of Computer Applications (BCA)</h3>
+      <p>Focused on computer science fundamentals, programming, databases, and real-world application development.</p>
+      <p>2022 - 2025</p>
+    </div>
+    <div class="edu-card">
+      <h3>Python Full Stack Development</h3>
+      <p>Hands-on training in building scalable web applications, frontend-backend integration, and database design.</p>
+      <p>2025</p>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <h2>Contact Me</h2>
+  <p>Email: <a href="mailto:nidhapa00@gmail.com">nidhapa00@gmail.com</a></p>
+  <p>
+    <a href="https://www.linkedin.com/in/nidha-fathima-9171b7355" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a> |
+    <a href="https://github.com/Nidha123-dev" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+  </p>
+</section>
+</main>
+
+<footer>
+  © 2025 Nidha, All rights reserved
+</footer>
+
+<script>
+  // Scroll animation
+  const cards = document.querySelectorAll('.skill-card, .project-card, .edu-card');
+  window.addEventListener('scroll', () => {
+    cards.forEach(card => {
+      const rect = card.getBoundingClientRect();
+      if (rect.top < window.innerHeight - 50) {
+        card.style.opacity = "1";
+        card.style.transform = "translateY(0)";
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
